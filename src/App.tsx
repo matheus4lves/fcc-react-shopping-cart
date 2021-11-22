@@ -1,3 +1,4 @@
+import { LinearProgress } from "@material-ui/core"
 import {useQuery} from "react-query"
 
 export type CartItemType = {
@@ -16,6 +17,11 @@ const getProducts = async (): Promise<CartItemType[]> => await (await fetch("htt
 function App() {
   const {data, isLoading, error} = useQuery<CartItemType[]>("products", getProducts)
   console.log(data)
+
+  if(isLoading) return <LinearProgress />
+
+  if(error) return <div>Something went wrong...</div>
+
   return (
     <div className="App">
       Start
