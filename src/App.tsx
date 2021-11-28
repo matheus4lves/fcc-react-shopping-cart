@@ -47,7 +47,18 @@ function App() {
     })
   }
   const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0); // The initial value of the accumulator is set to 0
-  const removeFromCart = () => null
+  const removeFromCart = (id: number) => {
+    setCartItems(prev => 
+      prev.reduce((ack, item) => {
+        if(item.id === id) {
+          if(item.amount ===1) return ack;
+          return [...ack, {...item, amount: item.amount -1}];
+        } else {
+          return [...ack, item]
+        }
+      }, [] as CartItemType[])
+    )
+  }
 
   return (
     <Wrapper>
