@@ -2,11 +2,12 @@ import {useQuery} from "react-query"
 // Components
 import Item from "./Item/Item"
 import { Drawer, Grid, LinearProgress } from "@material-ui/core"
+import Badge from "@material-ui/core/Badge"
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart"
+import Cart from "./Cart/Cart"
 // Styles
 import {Wrapper, StyledButton} from "./App.styles" // Object destructuring
 import { useState } from "react"
-import Badge from "@material-ui/core/Badge"
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart"
 
 export type CartItemType = {
   id: number;
@@ -31,7 +32,6 @@ function App() {
 
   if(error) return <div>Something went wrong...</div>
 
-  const getTotalItems = (items: CartItemType[]) => null;
   const addToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       // 1. Is the item already added in the cart?
@@ -45,7 +45,9 @@ function App() {
       // 2. First time item is added
       return [...prev, {...clickedItem, amount: 1}]
     })
-  };
+  }
+  const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0); // The initial value of the accumulator is set to 0
+  const removeFromCart = () => null
 
   return (
     <Wrapper>
