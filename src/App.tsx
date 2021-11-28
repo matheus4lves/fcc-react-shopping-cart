@@ -52,6 +52,7 @@ function App() {
   return (
     <Wrapper>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Cart cartItems={cartItems} addToCart={addToCart} removeFromCart={removeFromCart}/>
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
