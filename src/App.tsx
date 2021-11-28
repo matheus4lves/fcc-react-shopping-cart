@@ -31,13 +31,25 @@ function App() {
 
   if(error) return <div>Something went wrong...</div>
 
-  const addToCart = () => null;
   const getTotalItems = (items: CartItemType[]) => null;
+  const addToCart = (clickedItem: CartItemType) => {
+    setCartItems(prev => {
+      // 1. Is the item already added in the cart?
+      const isItemInCart = prev.find(item => item.id === clickedItem.id)
+      if(isItemInCart) {
+        return prev.map(item => (
+          item.id === clickedItem.id ? {...item, amount: item.amount + 1} : item
+        ))
+      }
+
+      // 2. First time item is added
+      return [...prev, {...clickedItem, amount: 1}]
+    })
+  };
 
   return (
     <Wrapper>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart goes here...
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
